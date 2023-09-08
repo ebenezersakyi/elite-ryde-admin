@@ -7,7 +7,7 @@ export default function DashboardLayout({
   return (
     <div className="w-[100vw]  grid grid-cols-12  divide-black/20">
       <NavBar />
-      <div className="p-8 border-l-[1px]">{children}</div>
+      <div className="p-8 border-l-[1px] col-span-10">{children}</div>
     </div>
   );
 }

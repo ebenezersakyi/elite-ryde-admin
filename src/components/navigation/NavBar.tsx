@@ -7,11 +7,10 @@ import { Iicon, menuItems } from "@/utils";
 import NavTile from "./components/NavTile";
 export default function NavBar() {
     const pathName = usePathname()
-    console.log("Pathname: ",pathName);
     
   return (
-    <div className="col-span-3 p-8 grid grid-rows-6 h-[100vh] sticky top-0 bottom-0">
-      <Image src={logo} alt="logo" width={200} height={200}  />
+    <div className="col-span-2 p-8 grid grid-rows-6 h-[100vh] sticky top-0 bottom-0">
+      <Image src={logo} alt="logo" width={170} priority />
 
       <div className="  row-span-6 self-center flex flex-col gap-6 pb-8 ">
 

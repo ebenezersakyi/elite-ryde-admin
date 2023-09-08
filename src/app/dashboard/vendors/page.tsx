@@ -1,9 +1,13 @@
-
+import Table from "@/components/shared/tables/Table";
 
 const VendorsPage = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <Table
+        titles={["id", "Approval type", "Date", "Approved By", "Status"]}
+      />
+    </div>
+  );
+};
 
-export default VendorsPage
+export default VendorsPage;
