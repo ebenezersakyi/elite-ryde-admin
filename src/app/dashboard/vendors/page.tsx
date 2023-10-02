@@ -4,7 +4,9 @@ const VendorsPage = () => {
   return (
     <div>
       <Table
-        titles={["id", "Approval type", "Date", "Approved By", "Status"]}
+        titles={["Name", "Date Joined", "Number of Cars", "Number of bookings", "Total Transactions"]}
+        select={[]}
+        data={[]}
       />
     </div>
   );

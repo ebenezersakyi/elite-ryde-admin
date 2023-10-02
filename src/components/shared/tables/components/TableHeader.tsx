@@ -1,11 +1,10 @@
-export default function TableHeader({titles}:{
-    titles: string[]
-}) {
+export default function TableHeader({ titles}: { titles: string[]}) {
   return (
     <div
-      className={`grid ${
-        "grid-cols-" + titles.length
-      } py-2  pt-4  bg-[#f1f0f0] border-[1px] border-slate-200 rounded-t-lg`}
+    style={{
+      gridTemplateColumns: `repeat(${titles.length}, 1fr)`
+    }}
+      className={`grid py-2  pt-4  bg-[#f1f0f0]  border-[1px] w-[100%] border-slate-200 rounded-t-lg`}
     >
       {titles.map((title, inx) => {
         return (
