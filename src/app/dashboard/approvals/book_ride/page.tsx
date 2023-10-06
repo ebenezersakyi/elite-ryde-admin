@@ -43,7 +43,7 @@ export default function BookingSignUpApproval() {
   };
   
 
-  // const { loading, data, error } = useFetchSingle(
+   // const { loading, data, error } = useFetchSingle(
   //   searchParams.get("id") as string
   // );
 
