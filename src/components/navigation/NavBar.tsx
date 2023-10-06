@@ -5,8 +5,12 @@ import logo from "../../assets/images/logo.svg";
 import { Icon } from "@iconify/react";
 import { Iicon, menuItems } from "@/utils";
 import NavTile from "./components/NavTile";
+import { useRouter } from "next/navigation"
+
 export default function NavBar() {
     const pathName = usePathname()
+    const router = useRouter()
+
     
   return (
     <div className="col-span-2 p-8 grid grid-rows-6 h-[100vh] sticky top-0 bottom-0">
@@ -20,10 +24,10 @@ export default function NavBar() {
         })}
       </div>
 
-      <span className="flex items-center gap-4 w-[100%] cursor-pointer rounded-sm p-2 hover:bg-slate-100 duration-500  outline-[1px] border-slate-200">
+      <a href="/api/auth/logout" className="flex items-center gap-4 w-[100%] cursor-pointer rounded-sm p-2 hover:bg-slate-100 duration-500  outline-[1px] border-slate-200" >
         <Icon icon='material-symbols:logout-sharp' width={20} />
         <p className="text-[1.1rem] font-[200]">Log out</p>
-      </span>
+      </a>
     </div>
   );
 }

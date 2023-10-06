@@ -1,40 +1,43 @@
 "use client"
 import Table from "@/components/shared/tables/Table";
+import Spinner from "@/components/spinner/Spinner";
+import { useData } from "@/contexts/DataContext";
+import useFetchApprovals from "@/hooks/useFetchApprovals";
 import useFetchCars from "@/hooks/useFetchCars";
+import { useEffect } from "react";
+
 export default function ApprovalsPage() {
-  const {loading, error, data} = useFetchCars()
-  const dd = [
-    {
-      id: 123, 
-      app: "user_signup", 
-      d: 1, 
-      s: "pending", 
-      da: '27-10-2002'
-    },
-    {
-      id: 123, 
-      app: "vendor_signup", 
-      d: 1, 
-      s: "pendingg", 
-      da: '27-10-2002'
-    },
-    {
-      id: 123, 
-      app: "add_car", 
-      d: 1, 
-      s: "pending", 
-      da: '27-10-2002'
-    },
-    {
-      id: 123, 
-      app: "book_ride", 
-      d: 1, 
-      s: "pending", 
-      da: '27-10-2002'
-    },
-  ]
+  const {approvals, setApprovalsFunc} = useData()
+  // const {loading, error, data} = useFetchCars()
+  const {loading, error, data} = useFetchApprovals()
+
+  // if(data && data !== undefined){
+  //   console.log('data-approvals', data)
+  // }
+
+  const arrayOfObjects = [];
+
+
+for (let key in data) {
+  if (data.hasOwnProperty(key) && key !== "content") {
+    arrayOfObjects.push(data[key]);
+  }
+}
+
+const removeUndefined= arrayOfObjects.filter((item) => {
+  return item !== undefined
+})
+
+useEffect(() => {
+  console.log('removeUndefined', removeUndefined);
+  setApprovalsFunc(removeUndefined)
+}, [data])
+
+
+
+  
   if(loading){
-    // return <p>loading...</p>
+    return <Spinner/>
   }
 
   if(error){
@@ -52,7 +55,9 @@ export default function ApprovalsPage() {
           approvalType={1}
           date={4}
           select={[0, 1, 4, 3]}
-          data={dd}
+          data={removeUndefined}
+          route={`approvals`}
+          clickable={true}
         />
     </div>
   );

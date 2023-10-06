@@ -1,5 +1,7 @@
+import { UserProvider } from '@auth0/nextjs-auth0/client'
 import './globals.css'
 import type { Metadata } from 'next'
+import DataProvider from '@/contexts/DataContext'
 
 
 export const metadata: Metadata = {
@@ -13,8 +15,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
+    <UserProvider>
+
+      <html lang="en">
+        <body>{children}</body>
+      </html>
+    </UserProvider>
   )
 }

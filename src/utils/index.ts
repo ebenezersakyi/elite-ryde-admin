@@ -133,9 +133,11 @@ export function determineRoute(type: string): string {
   }
   return "";
 }
+
 export enum docsEnum {
   document = "Business Registration Document",
 }
+
 export function formatContent(p: string = " "): any[] {
   try {
     const data = JSON.parse(p);
@@ -171,7 +173,7 @@ export const baseURL = "https://elite-ryde-admin-api.azurewebsites.net/api";
 export async function manageApproval(
   id: string,
   approved: boolean,
-  cb: () => void
+  // cb: () => void
 ) {
   try {
     const response = await axios({
@@ -182,14 +184,39 @@ export async function manageApproval(
         approved,
       },
     });
+    console.log(response)
     if (response?.data?.status) {
       toast('Approval Managed Succesfully', { hideProgressBar: true, autoClose: 2000, type: 'success' })
-
     } else {
       toast(response?.data?.message, { hideProgressBar: true, autoClose: 2000, type: 'error' })
     }
   } catch (error: any) {
     toast(error?.message, { hideProgressBar: true, autoClose: 2000, type: 'error' })
+  }
+  finally{
+    // cb()
+  }
+}
+
+export async function getTransactions(
+  id: string,
+) {
+  console.log('getting transacs')
+  try {
+    const response = await axios({
+      method: "get", 
+      url: `https://elite-ryde-management-api.azurewebsites.net/api/get-vendor-transactions?id=${id}`,
+    });
+    console.log('history',response.data.data)
+    return response.data.data
+    // if (response?.data?.status) {
+      
+    // } else {
+    //   toast(response?.data?.message, { hideProgressBar: true, autoClose: 2000, type: 'error' })
+    // }
+  } catch (error: any) {
+    console.log(error)
+    // toast(error?.message, { hideProgressBar: true, autoClose: 2000, type: 'error' })
   }
   finally{
     // cb()
