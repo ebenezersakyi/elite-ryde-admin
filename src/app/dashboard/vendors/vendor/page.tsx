@@ -139,13 +139,13 @@ export default function UserPage() {
       )}
 
 <div className="flex mt-8">
-          <button
+          {/* <button
             onClick={handleDisableAccount}
             className="bg-black text-white py-2 px-4 rounded-full mr-4 hover:bg-gray-800 text-sm flex items-center"
           >
             <Icon icon={"mdi:account-off"} width={20} className={"mr-2"} />
             Disable Account
-          </button>
+          </button> */}
 
           {/* <button
             onClick={handleDeleteAccount}

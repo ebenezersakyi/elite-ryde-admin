@@ -36,30 +36,26 @@ export default function DashBoard() {
   console.log('dash', data)
 
   const filter = (data:string) => {
-    // Assuming your date string is in the following format: "YYYY-MM-DD HH:mm:ss"
-const dateString = data;
-const date = new Date(dateString);
+    const dateString = data;
+    const date = new Date(dateString);
 
-// Get today's date
-const today = new Date();
+    const today = new Date();
 
-// Check if the date is today
-const isToday = date.toDateString() === today.toDateString();
+    const isToday = date.toDateString() === today.toDateString();
 
-// Check if the date is within the current week
-const isThisWeek = date >= new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay()) &&
-  date <= new Date(today.getFullYear(), today.getMonth(), today.getDate() + (6 - today.getDay()));
+    const isThisWeek = date >= new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay()) &&
+      date <= new Date(today.getFullYear(), today.getMonth(), today.getDate() + (6 - today.getDay()));
 
-if (isToday) {
-  console.log("The date is today.");
-  return 'Today'
-} else if (isThisWeek) {
-  console.log("The date is within this week.");
-  return 'This week'
-} else {
-  console.log("The date is neither today nor this week.");
-  return 'All'
-}
+    if (isToday) {
+      console.log("The date is today.");
+      return 'Today'
+    } else if (isThisWeek) {
+      console.log("The date is within this week.");
+      return 'This week'
+    } else {
+      console.log("The date is neither today nor this week.");
+      return 'All'
+    }
   }
 
   const filterVar = data?.filter((item:any) => {

@@ -29,7 +29,7 @@ export default function DropDown() {
         />
       </span>
       {menuOpen && 
-      <div className=" absolute top-10 bg-white shadow z-3">
+      <div className=" absolute top-10 bg-white shadow z-3 gap-4 w-max">
         {filters.map((item, index) => {
           return(
             <div
