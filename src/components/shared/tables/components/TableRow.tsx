@@ -63,7 +63,10 @@ export default function TableRow({
           </p>
         );
       })}
-      <Icon icon="bi:three-dots-vertical" className="absolute right-0 top-3" onClick={(e) => handleMenuClick(e)}/>
+      {/* <Icon icon="bi:three-dots-vertical" className="absolute right-0 top-3" onClick={(e) => handleMenuClick(e)}/> */}
+      {clickable &&
+        <Icon icon="bi:arrow-right" color="grey" className="absolute right-0 top-3 mr-5 "/>
+      }
 
       {activeMenuId == id && isMenuOpen && 
       <div className=" absolute right-3 top-1 bg-white shadow z-3">

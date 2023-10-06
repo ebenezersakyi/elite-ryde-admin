@@ -9,6 +9,7 @@ export default function Home() {
   const [loaded, setLoaded] = useState(false)
   const router = useRouter()
 
+
   const { user, error, isLoading } = useUser();
 
   if(user){

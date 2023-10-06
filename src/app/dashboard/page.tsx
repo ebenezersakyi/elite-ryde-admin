@@ -10,6 +10,8 @@ import useFetchStats from "@/hooks/useFetchStats";
 import Spinner from "@/components/spinner/Spinner";
 import { useState } from "react";
 import useFetchData from "@/hooks/useFetchData";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import { useData } from "@/contexts/DataContext";
 
 export default function DashBoard() {
   const [infoCardItems, setInfoCardItems] = useState()
@@ -17,6 +19,10 @@ export default function DashBoard() {
   const stats = useFetchStats();
   const users = useFetchData("users")
   const vendors = useFetchData("vendors")
+
+  const {recentApprovalsFilter} = useData()
+
+  const { user, isLoading } = useUser();
 
 
   if (loading || users.loading || vendors.loading) {
@@ -29,11 +35,49 @@ export default function DashBoard() {
 
   console.log('dash', data)
 
+  const filter = (data:string) => {
+    // Assuming your date string is in the following format: "YYYY-MM-DD HH:mm:ss"
+const dateString = data;
+const date = new Date(dateString);
+
+// Get today's date
+const today = new Date();
+
+// Check if the date is today
+const isToday = date.toDateString() === today.toDateString();
+
+// Check if the date is within the current week
+const isThisWeek = date >= new Date(today.getFullYear(), today.getMonth(), today.getDate() - today.getDay()) &&
+  date <= new Date(today.getFullYear(), today.getMonth(), today.getDate() + (6 - today.getDay()));
+
+if (isToday) {
+  console.log("The date is today.");
+  return 'Today'
+} else if (isThisWeek) {
+  console.log("The date is within this week.");
+  return 'This week'
+} else {
+  console.log("The date is neither today nor this week.");
+  return 'All'
+}
+  }
+
+  const filterVar = data?.filter((item:any) => {
+    return filter(item.createdOn) == recentApprovalsFilter
+  })
+
+
   return (
     <>
       <div className="">
         <div className="">
-          <DropDown />
+          <div className="flex w-full">
+            <DropDown />
+            <div className="flex absolute right-7 justify-center items-center">
+              <img src={`${user?.picture}`} alt="" className="h-10 w-10 rounded-full" />
+              <span className="text-gray-900 ml-2">{user?.nickname}</span>
+            </div>
+          </div>
 
           <div className="w-full grid grid-cols-5 gap-2 py-4">
             {users.data && 
@@ -73,7 +117,7 @@ export default function DashBoard() {
             approvalType={1}
             date={4}
             select={[0, 1, 4, 3]}
-            data={data}
+            data={recentApprovalsFilter !== 'All'? filterVar.flat(1) : data}
             clickable={false}
             route={"dashboard"}
           />

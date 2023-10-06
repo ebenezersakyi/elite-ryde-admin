@@ -8,16 +8,24 @@ export function useData() {
 }
 
 export default function DataProvider({ children }) {
+  const [adminInfo, setAdminInfo] = useState();
   const [vendors, setVendors] = useState();
   const [users, setUsers] = useState();
   const [approvals, setApprovals] = useState();
   const [userHistory, setUserHistory] = useState();
   const [vendorHistory, setVendorHistory] = useState();
   const [loading, setLoading] = useState(true);
+  const [recentApprovalsFilter, setRecentApprovalsFilter] = useState("All");
+
+  function updateFecentApprovalsFilter(data) {
+    setRecentApprovalsFilter(data);
+    console.log("admin", data);
+  }
 
   function updateVendors(data) {
     setVendors(data);
   }
+
   function updateUsers(data) {
     setUsers(data);
     console.log("users", data);
@@ -118,11 +126,13 @@ export default function DataProvider({ children }) {
     approvals,
     userHistory,
     vendorHistory,
+    recentApprovalsFilter,
     updateVendors,
     updateUsers,
     setApprovalsFunc,
     setUserHistoryFunc,
     setVendorHistoryFunc,
+    updateFecentApprovalsFilter,
   };
 
   return (
