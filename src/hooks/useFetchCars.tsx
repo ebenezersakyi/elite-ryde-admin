@@ -1,16 +1,17 @@
 import { baseURL } from "@/utils";
 import axios, { AxiosError } from "axios";
 import { useState, useEffect } from "react";
-export default function useFetchCars() {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = useState<any>();
-  const [error, setError] = useState<string>();
-  async function fetchCars() {
+export default function useFetchVendorCars(id: string) {
+  const [carLoading, setLoading] = useState<boolean>(false);
+  const [carData, setData] = useState<any>();
+  const [carError, setError] = useState<string>();
+  async function fetchHistory() {
     try {
         setLoading(true)
         const response = await axios({
             method: "get", 
-            url: `${baseURL}/approvals`
+            // url: `https://elite-ryde-management-api.azurewebsites.net/api/car?vendorId=${id}`
+            url: `https://elite-ryde-management-api.azurewebsites.net/api/car`
         })
 
         if(response?.data?.status)[
@@ -30,7 +31,8 @@ export default function useFetchCars() {
     }
   }
   useEffect(() => {
-    fetchCars()
+    fetchHistory()
   }, [])
-  return {loading, data, error}
+  console.log('carLoading, carData, carError', carData)
+  return {carLoading, carData, carError}
 }

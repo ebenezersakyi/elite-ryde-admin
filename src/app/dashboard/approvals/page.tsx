@@ -2,8 +2,8 @@
 import Table from "@/components/shared/tables/Table";
 import Spinner from "@/components/spinner/Spinner";
 import { useData } from "@/contexts/DataContext";
-import useFetchApprovals from "@/hooks/useFetchApprovals";
-import useFetchCars from "@/hooks/useFetchCars";
+import useFetchApprovals from "@/hooks/useFetchPendingApprovals";
+import useFetchCars from "@/hooks/useFetchApprovals";
 import { useEffect } from "react";
 
 export default function ApprovalsPage() {

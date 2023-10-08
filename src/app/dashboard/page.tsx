@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify";
 import DropDown from "@/components/shared/DropDown";
 import Table from "@/components/shared/tables/Table";
 import { InfoCardItems, InfoCardProps } from "@/utils";
-import useFetchCars from "@/hooks/useFetchCars";
+import useFetchCars from "@/hooks/useFetchApprovals";
 import useFetchStats from "@/hooks/useFetchStats";
 import Spinner from "@/components/spinner/Spinner";
 import { useState } from "react";
