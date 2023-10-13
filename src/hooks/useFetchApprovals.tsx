@@ -14,8 +14,9 @@ export default function useFetchCars() {
         })
 
         if(response?.data?.status)[
-            setData(response?.data?.data)
+          setData(response?.data?.data)
         ]
+        // console.log('response?.data?.data', response?.data?.data)
         
     } catch (error: any) {
        if(error instanceof AxiosError){

@@ -10,8 +10,8 @@ export default function useFetchVendorCars(id: string) {
         setLoading(true)
         const response = await axios({
             method: "get", 
-            // url: `https://elite-ryde-management-api.azurewebsites.net/api/car?vendorId=${id}`
-            url: `https://elite-ryde-management-api.azurewebsites.net/api/car`
+            url: `https://elite-ryde-management-api.azurewebsites.net/api/car?vendorId=${id}`
+            // url: `https://elite-ryde-management-api.azurewebsites.net/api/car`
         })
 
         if(response?.data?.status)[

@@ -1,4 +1,5 @@
 "use client";
+import useFetchData from "@/hooks/useFetchData";
 import React, { useContext, useState, useEffect } from "react";
 
 const AuthContext = React.createContext();
@@ -16,19 +17,20 @@ export default function DataProvider({ children }) {
   const [vendorHistory, setVendorHistory] = useState();
   const [loading, setLoading] = useState(true);
   const [recentApprovalsFilter, setRecentApprovalsFilter] = useState("All");
+  const { data, error } = useFetchData("vendors");
 
   function updateFecentApprovalsFilter(data) {
     setRecentApprovalsFilter(data);
-    console.log("admin", data);
+    // console.log("admin", data);
   }
 
-  function updateVendors(data) {
-    setVendors(data);
+  function updateVendors() {
+    // setVendors(data);
   }
 
   function updateUsers(data) {
     setUsers(data);
-    console.log("users", data);
+    // console.log("users", data);
   }
 
   const setApprovalsFunc = (data) => {
@@ -42,6 +44,10 @@ export default function DataProvider({ children }) {
   const setVendorHistoryFunc = (data) => {
     setVendorHistory(data);
   };
+
+  useEffect(() => {
+    setVendors(data);
+  }, [data]);
 
   useEffect(() => {
     // const unsubscribe = auth.onAuthStateChanged((user) => {

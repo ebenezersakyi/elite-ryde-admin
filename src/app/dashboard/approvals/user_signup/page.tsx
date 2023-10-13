@@ -22,11 +22,6 @@ export default function SignUpApproval() {
     }
   }, []);
 
-  const id = searchParams.get("id")
-  const match = approvals.filter((item: any) => {
-    return item._id == id
-  })
-  const data  = match.flat(1)[0]
 
   const handleApprove = async (id: string, approved: boolean) => {
     const response = await axios({
@@ -42,15 +37,6 @@ export default function SignUpApproval() {
     console.log(data)
   };
 
-  // const { loading, data, error } = useFetchSingle(
-  //   searchParams.get("id") as string
-  // );
-  // if (loading) {
-  //   return <p>Loading...</p>;
-  // }
-  // if (error) {
-  //   // return <p>Error: {error}</p>;
-  // }
 
     const dateConvertor = (dateM: string) => {
     const mongodbDate = dateM;
@@ -69,9 +55,46 @@ export default function SignUpApproval() {
     return formattedDate
   }
 
+  const id = searchParams.get("id")
+  const match = approvals.filter((item: any) => {
+    return item._id == id
+  })
+  const data  = match.flat(1)[0]  
+  const contentObj = JSON.parse(data.content?.replace(/\\n/g, '').replace(/\\"/g, '"'));
+
+  console.log('data', contentObj)
+
+  const sendEmail = async () => {
+    const emailData = {
+      from: 'your@email.com',
+      to: 'ebensakyi0@email.com',
+      subject: 'Test Email',
+      text: 'This is a test email sent using Infobip Email API.',
+    }
+    try {
+      const response = await axios.post(
+        '1vvx3k.api.infobip.com',
+        emailData,
+        {
+          headers: {
+            'Authorization': 'Bearer 495c5273e7f5e7e9251bd4c5d2d717fa-7e151b0e-8810-4106-bd36-8892c9e9922b',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      console.log('Email sent successfully:', response.data);
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  }
+
+  const createdOnDate = new Date(data.createdOn);
+  const formattedDate = `${createdOnDate.getFullYear()}-${String(createdOnDate.getMonth() + 1).padStart(2, '0')}-${String(createdOnDate.getDate()).padStart(2, '0')}`;
+  const formattedTime = `${String(createdOnDate.getHours()).padStart(2, '0')}:${String(createdOnDate.getMinutes()).padStart(2, '0')}:${String(createdOnDate.getSeconds()).padStart(2, '0')}`;
+
   return (
-    <div>
-    <div className="flex ">
+    <div className="w-full">
+    <div className="flex mt-[55px]">
     <div className="flex cursor-pointer" onClick={() => router.back()}>
       <Icon
         icon={'mdi:arrow-left'} width={25} className={'text-black'} />
@@ -87,29 +110,73 @@ export default function SignUpApproval() {
 
     <div className="container mx-auto py-8">
   <div className="bg-slate-100 rounded-lg p-4 mt-10">
-    <h2 className="text-xl font-semibold mb-4">Approval Details</h2>
+    <h2 className="text-xl font-semibold mb-4">User Signup Details</h2>
     <div className="grid grid-cols-2 gap-4">
-      <div>
-        <p className="font-medium text-gray-400">ID:</p>
-        <p>{data._id}</p>
+      <div className="flex">
+        <span className="bg-[#99625d] text-white w-[45px] h-[45px] justify-center items-center flex rounded-full text-xl">{contentObj?.firstName?.charAt(0).toUpperCase()}</span>
+        <div className="ml-[5px] flex-col justify-center items-center">
+          <p className="flex">{contentObj.firstName || contentObj.basicInformation.make} {contentObj.lastName || contentObj.basicInformation.model}</p>
+          <p className="text-[10px] text-black">{contentObj.email || contentObj.basicInformation.year}</p>
+        </div>
       </div>
-      <div>
-        <p className="font-medium text-gray-400">Type:</p>
-        <p>{data.type}</p>
+
+      <div className="flex">
+        <span className="bg-[#99945d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
+          <Icon icon={`mdi:location`} width={25} className={'text-white'} />
+        </span>
+        <div className="ml-[5px] flex-col flex justify-center ">
+          <p className="text-[14px]">{contentObj.location || contentObj.additionalInformation.location}</p>
+          {/* <p className="text-left text-[10px]">{formattedTime}</p> */}
+        </div>
       </div>
-      {/* <div>
-        <p className="font-semibold">Duration:</p>
-        <p>{data.d}</p>
-      </div> */}
-      <div>
-        <p className="font-medium text-gray-400">Date Applied:</p>
-        <p>{dateConvertor(data.createdOn)}</p>
+
+      <div className="flex">
+        <span className="bg-[#5d995d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
+          <Icon icon={`mdi:calendar`} width={25} className={'text-white'} />
+        </span>
+        <div className="ml-[5px] flex-col flex justify-center ">
+          <p className="text-[14px]">{formattedDate}</p>
+          <p className="text-left text-[10px]">{formattedTime}</p>
+        </div>
       </div>
+
+      <div className="flex">
+        <span className="bg-[#5d995d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
+          <Icon icon={`mdi:card`} width={25} className={'text-white'} />
+        </span>
+        <div className="ml-[5px] flex-col flex justify-center ">
+          <p className="text-left text-[10px]">ID Type:</p>
+          <p className="text-[14px]">{contentObj.idType}</p>
+          {/* <p className="text-left text-[10px]">{formattedTime}</p> */}
+        </div>
+      </div>
+
+      <div className="flex">
+        <span className="bg-[#5d995d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
+          <Icon icon={`mdi:pound`} width={25} className={'text-white'} />
+        </span>
+        <div className="ml-[5px] flex-col flex justify-center ">
+          <p className="text-left text-[10px]">ID Number:</p>
+          <p className="text-[14px]">{contentObj.idNumber}</p>
+        </div>
+      </div>
+
+      <div className="flex">
+        <span className="bg-[#5d995d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
+          <Icon icon={`mdi:phone`} width={25} className={'text-white'} />
+        </span>
+        <div className="ml-[5px] flex-col flex justify-center ">
+          <p className="text-left text-[10px]">Phone Number:</p>
+          <p className="text-[14px]">{contentObj.phoneNumber}</p>
+        </div>
+      </div>
+      
+
     </div>
     {data.status === "Pending" && (
-      <div className="mt-4">
+      <div className="mt-[35px]">
         <button
-          onClick={() => manageApproval(data._id, true).then(() =>router.back())}
+          onClick={() => manageApproval(data._id, true).then(() =>{sendEmail(); router.back()})}
           className="bg-green-500 text-white py-2 px-4 rounded-full hover:bg-green-600 mr-2"
         >
           Approve

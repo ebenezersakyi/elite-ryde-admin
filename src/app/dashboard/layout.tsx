@@ -1,6 +1,7 @@
 import NavBar from "@/components/navigation/NavBar";
 import DataProvider from "@/contexts/DataContext";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
+import { ToastContainer } from "react-toastify";
 
 export default function DashboardLayout({
   children,
@@ -9,10 +10,23 @@ export default function DashboardLayout({
 }) {
   return (
       <DataProvider>
-      <div className="w-[100vw]  grid grid-cols-12  divide-black/20">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      <div className="w-[100vw]   divide-black/20 flex">
         <NavBar />
-        <div className="p-8 border-l-[1px] col-span-10">{children}</div>
+        <div className=" flex p-8 border-l-[1px] col-span-10 flex-grow ">{children}</div>
       </div>
+      {/* <ToastContainer/> */}
       </DataProvider>
   );
 }

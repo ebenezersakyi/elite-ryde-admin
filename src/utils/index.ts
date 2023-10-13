@@ -186,9 +186,31 @@ export async function manageApproval(
     });
     console.log(response)
     if (response?.data?.status) {
-      toast('Approval Managed Succesfully', { hideProgressBar: true, autoClose: 2000, type: 'success' })
+      // toast('Approval Managed Succesfully', { hideProgressBar: true, autoClose: 2000, type: 'success' })
+      toast('Approval Managed Succesfully!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        type:'success'
+        }); 
     } else {
-      toast(response?.data?.message, { hideProgressBar: true, autoClose: 2000, type: 'error' })
+      // toast(response?.data?.message, { hideProgressBar: true, autoClose: 2000, type: 'error' })
+      toast(response?.data?.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        type:'error'
+        }); 
     }
   } catch (error: any) {
     toast(error?.message, { hideProgressBar: true, autoClose: 2000, type: 'error' })
@@ -222,3 +244,42 @@ export async function getTransactions(
     // cb()
   }
 }
+
+export async function sendEmail(to:any, text:any, subject:any) {
+  const form_data = {
+    to,
+    text,
+    subject,
+  };
+
+  try {
+    const response = await axios.post(`http://localhost:4000/send-email`, form_data);
+    console.log("Status Code:", response.status);
+    toast('Approval Email Sent!', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });    
+  } catch (error) {
+    console.error("Error:", error);
+    // toast('Error Sending Email', { hideProgressBar: true, autoClose: 2000, type: 'error' })
+    toast('Error Sending Email', {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      type: 'error'
+      });   
+    // Handle errors here
+  }
+}
+

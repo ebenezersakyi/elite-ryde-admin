@@ -14,7 +14,7 @@ export default function HistoryPage() {
     const router = useRouter()
 
   return (
-    <div className="">
+    <div className="w-full h-full">
     <div className="flex cursor-pointer mb-15" onClick={() => router.back()}>
         <Icon 
           icon={'mdi:arrow-left'} width={25} className={'text-black'} />

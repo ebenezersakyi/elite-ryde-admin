@@ -10,7 +10,7 @@ export default function DropDown() {
   const {updateFecentApprovalsFilter, recentApprovalsFilter} = useData()
 
   return (
-    <div className="relative">
+    <div className="relative z-10 ml-[20px]">
       <span 
         className="p-2 font-[200] border-[1px] inline-grid grid-cols-2 gap-4 w-max items-center"
         onClick={() => setMenuOpen(!menuOpen)}
@@ -29,7 +29,7 @@ export default function DropDown() {
         />
       </span>
       {menuOpen && 
-      <div className=" absolute top-10 bg-white shadow z-3 gap-4 w-max">
+      <div className=" absolute top-10 right-0 bg-white shadow z-3 gap-4 w-max">
         {filters.map((item, index) => {
           return(
             <div
@@ -52,5 +52,5 @@ export default function DropDown() {
 }
 
 const filters = [
-  'Today', 'This week', 'All'
+  'Rejected', 'Approved', 'All'
 ]

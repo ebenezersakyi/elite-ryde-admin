@@ -9,6 +9,7 @@ import axios from "axios";
 
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function UserPage() {
   const [token, setToken] = useState('')
@@ -20,26 +21,27 @@ export default function UserPage() {
   // const {data, loading, error} = useFetchSingle(searchParams.get('id') as string)
   const {data, loading, error} = useFetchHistory(id as string)
 
-  console.log("id", data);
   
-
   
-
+  
+  
   const handleDisableAccount = () => {
     alert("Account disabled!");
   };
-
-
+  
+  
   const handleViewTransactions = (id: string) => {
+    // toast('Loading...', { hideProgressBar: true, autoClose: 2000, type: 'success', position: 'top-right' })
     getTransactions(id).then((data) => {setUserHistoryFunc(data);  router.push('/dashboard/users/history');})
   };
-
+  
   useEffect(() => {
     const userMatch = users?.filter((item:any) => {
       return item._id == id
     })
     if(userMatch){
       setUser(userMatch[0])
+      console.log("id", userMatch[0]);
     }else{
       router.back()
     }
@@ -63,7 +65,7 @@ export default function UserPage() {
 
 
   return (
-    <div>
+    <div className="flex flex-col mt-[55px] w-full">
       <div className="flex cursor-pointer" onClick={() => router.back()}>
         <Icon 
           icon={'mdi:arrow-left'} width={25} className={'text-black'} />
@@ -78,33 +80,63 @@ export default function UserPage() {
             src={`${user.passportPicture}?${token}` || `${user.idImage}?${token}`}
             alt={`${user.firstName}'s Passport`}
             className="w-16 h-16 rounded-full mr-4 bg-slate-800"
-          /> : null
+          /> : 
+          <span className="bg-[#99625d] text-white w-[45px] h-[45px] justify-center items-center flex rounded-full text-xl">{user?.firstName?.charAt(0).toUpperCase()}</span>
         }
-        <div>
-          <h2 className="text-xl font-semibold">
+        <div className="ml-[5px]">
+          <p className="text-[14px] font-semibold">
             {user.firstName} {user.lastName}
-          </h2>
-          <p className="text-gray-400">{user.email}</p>
+          </p>
+          <p className="text-gray-400 text-[10px">{user.email}</p>
         </div>
       </div>
+
       <hr className="my-4" />
       <div className="grid grid-cols-2 gap-4">
-        <div>
-          <p className="text-gray-600 text-sm">Phone Number:</p>
-          <p>{user.phoneNumber}</p>
+        <div className="flex">
+          <span className="bg-[#99945d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
+            <Icon icon={`mdi:phone`} width={25} className={'text-white'} />
+          </span>
+          <div className="ml-[5px] flex-col flex justify-center ">
+            <p className="text-left text-[10px]">Phone Number:</p>
+            <p className="text-[14px]">{user.phoneNumber}</p>
+            {/* <p className="text-left text-[10px]">{formattedTime}</p> */}
+          </div>
         </div>
-        <div>
-          <p className="text-gray-600 text-sm">Location:</p>
-          <p>{user.location}</p>
+
+        <div className="flex">
+          <span className="bg-[#99945d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
+            <Icon icon={`mdi:location`} width={25} className={'text-white'} />
+          </span>
+          <div className="ml-[5px] flex-col flex justify-center ">
+            <p className="text-left text-[10px]">Location:</p>
+            <p className="text-[14px]">{user.location}</p>
+            {/* <p className="text-left text-[10px]">{formattedTime}</p> */}
+          </div>
         </div>
-        <div>
-          <p className="text-gray-600 text-sm">ID Type:</p>
-          <p>{user.idType}</p>
+
+        <div className="flex">
+          <span className="bg-[#99945d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
+            <Icon icon={`mdi:card`} width={25} className={'text-white'} />
+          </span>
+          <div className="ml-[5px] flex-col flex justify-center ">
+            <p className="text-left text-[10px]">ID Type:</p>
+            <p className="text-[14px]">{user.idType}</p>
+            {/* <p className="text-left text-[10px]">{formattedTime}</p> */}
+          </div>
         </div>
-        <div>
-          <p className="text-gray-600 text-sm">ID Number:</p>
-          <p>{user.idNumber}</p>
+
+        <div className="flex">
+          <span className="bg-[#99945d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
+            <Icon icon={`mdi:card`} width={25} className={'text-white'} />
+          </span>
+          <div className="ml-[5px] flex-col flex justify-center ">
+            <p className="text-left text-[10px]">ID Number:</p>
+            <p className="text-[14px]">{user.idNumber}</p>
+            {/* <p className="text-left text-[10px]">{formattedTime}</p> */}
+          </div>
         </div>
+
       </div>
       {user.nonGhanaian && (
         <div className="mt-4">
@@ -112,7 +144,7 @@ export default function UserPage() {
         </div>
       )}
 
-<div className="flex mt-8">
+      <div className="flex mt-8">
           {/* <button
             onClick={handleDisableAccount}
             className="bg-black text-white py-2 px-4 rounded-full mr-4 hover:bg-gray-800 text-sm flex items-center"
