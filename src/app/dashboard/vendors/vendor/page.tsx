@@ -26,8 +26,17 @@ export default function UserPage() {
 
   const vendorMatch = vendors?.filter((item:any) => {
     return item._id == id
-  })
-  const {carData, carLoading, carError} = useFetchVendorCars(vendorMatch[0]?.authId)
+  })[0]
+
+  // if(vendorMatch){
+
+    const {carData, carLoading, carError} = useFetchVendorCars(vendorMatch?.authId)
+  // }
+
+
+
+
+  
   // const {data, loading, error} = useFetchSingle(searchParams.get('id') as string)
   
 
@@ -71,9 +80,10 @@ export default function UserPage() {
   
 
   useEffect(() => {
-    // const vendorMatch = vendors?.filter((item:any) => {
-    //   return item._id == id
-    // })
+    const vendorMatch = vendors?.filter((item:any) => {
+      return item._id == id
+    })
+
     if(vendorMatch){
       console.log('vendorMatch', vendorMatch[0])
       
@@ -83,7 +93,8 @@ export default function UserPage() {
     }
     getToken()
     // useFetchVendorCars(vendor?.authId)
-  }, [vendors, vendor])
+  }, [vendors])
+
 
   // if(vendor){
   //   console.log('vendor.authId', vendor.authId)

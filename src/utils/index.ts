@@ -187,30 +187,10 @@ export async function manageApproval(
     console.log(response)
     if (response?.data?.status) {
       // toast('Approval Managed Succesfully', { hideProgressBar: true, autoClose: 2000, type: 'success' })
-      toast('Approval Managed Succesfully!', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        type:'success'
-        }); 
+      toast('Approval Managed Succesfully!'); 
     } else {
       // toast(response?.data?.message, { hideProgressBar: true, autoClose: 2000, type: 'error' })
-      toast(response?.data?.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        type:'error'
-        }); 
+      toast.error(response?.data?.message); 
     }
   } catch (error: any) {
     toast(error?.message, { hideProgressBar: true, autoClose: 2000, type: 'error' })

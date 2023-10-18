@@ -103,6 +103,30 @@ export default function BookingSignUpApproval() {
       }
     }, [approvals])
 
+    const refundMoney = async() => {
+      const secretKey = process.env.REACT_APP_PAYSTACK_TEST_KEY;
+      const apiUrl = 'https://api.paystack.co/refund';
+
+      const data = {
+        transaction: contentObj?.transactionId,
+      };
+
+      const headers = {
+        'Authorization': `Bearer ${secretKey}`,
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
+      };
+
+      axios
+      .post(apiUrl, data, { headers })
+      .then(response => {
+        console.log('Response:', response.data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
 
   // useEffect(() => {
   //   getCar(contentObj?.carId)
@@ -242,7 +266,12 @@ export default function BookingSignUpApproval() {
     {data?.status === "Pending" && (
       <div className="mt-[35px]">
       <button
-        onClick={() => manageApproval(data?._id, true).then(() =>{sendEmail('ebensakyi0@gmail.com', `Your request has been approved`, 'Request Approved'); router.back()})}
+        onClick={() => {
+          manageApproval(data?._id, true)
+          .then(() =>{
+            // sendEmail('ebensakyi0@gmail.com', `Your request has been approved`, 'Request Approved'); 
+            router.back()
+          })}}
         className="bg-green-500 text-white py-2 px-4 rounded-full hover:bg-green-600 mr-2"
       >
         Approve
@@ -259,7 +288,8 @@ export default function BookingSignUpApproval() {
 </div>
 
 {showDeclineDialogue && 
-      <div className="fixed flex top-0 left-0 h-full w-full bg-black bg-opacity-80 justify-center items-center" onClick={() => {setShowDeclineDialogue(false)}}>
+      <div className="fixed flex top-0 left-0 h-full w-full bg-black bg-opacity-80 justify-center items-center" >
+        <span className="absolute top[10px] right[10px] p-[10px[ rounded-lg font-semibold text[20px]" onClick={() => {setShowDeclineDialogue(false)}}>X</span>
         <div className=" flex flex-col w-[350px]  p-[20px] bg-white rounded-lg">
           <span className="text-[24px] my-[10px]">Reason for decline</span>
           <input type="text" className="w-full h-[50px] border-[2px] rounded-lg p-[10px]" />
@@ -268,6 +298,7 @@ export default function BookingSignUpApproval() {
             onClick={() => {
               manageApproval(data?._id, false).then(() =>{
                 sendEmail('ebensakyi0@gmail.com', `Your request has been declined`, 'Request Declined');
+                refundMoney()
                 setShowDeclineDialogue(false)
                 router.back();
               });

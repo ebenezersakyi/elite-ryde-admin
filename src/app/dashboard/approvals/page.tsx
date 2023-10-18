@@ -76,7 +76,7 @@ const getVendorNameAndEmail = (data: any) => {
       </div>  
     <div className="mt-[25px] w-full overflow-x-scroll">
       <TableHeader titles={[
-        "Detais",
+        "Details",
         "Approval type",
         "Date",
         "Location",
@@ -102,11 +102,11 @@ const getVendorNameAndEmail = (data: any) => {
             } my-[10px] p-[10px] border-[2px] rounded-lg cursor-pointer relative`}
           >
             <div className="flex">
-              {contentObj.idImage || contentObj.photos? (
+              {/* {contentObj.idImage || contentObj.photos? (
                 <img src={contentObj.idImage || contentObj.photos[0]} alt="" className="w-[45px] h-[45px] rounded-full" />
-              ) : (
+              ) : ( */}
                 <span className="bg-[#99625d] text-white w-[45px] h-[45px] justify-center items-center flex rounded-full text-xl">{contentObj?.firstName?.charAt(0).toUpperCase()}</span>
-              )}
+              {/* )} */}
               <div className="ml-[5px] flex-col justify-center items-center">
                 <p className="flex">{contentObj?.firstName || contentObj?.basicInformation?.make} {contentObj?.lastName || contentObj?.basicInformation?.model}</p>
                 <p className="text-[10px] text-black">{contentObj?.email || contentObj?.basicInformation?.year}</p>
