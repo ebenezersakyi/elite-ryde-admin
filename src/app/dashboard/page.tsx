@@ -38,6 +38,11 @@ export default function DashBoard() {
 
   console.log('dash', data)
 
+  const sorted = data?.sort((a: any, b: any) => {
+    return new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime();
+  });
+  
+
   function convertSnakeCaseToTitleCase(inputString:any) {
     const words = inputString.split('_');
     const capitalizedWords = words.map((word:any) => word.charAt(0).toUpperCase() + word.slice(1));
@@ -71,14 +76,14 @@ export default function DashBoard() {
   // const filterVar = data?.filter((item:any) => {
   //   return filter(item.createdOn)
   // })
-  const filterVar = data
+  const filterVar = sorted
   ?.filter((item: any) => {
     return item.status === recentApprovalsFilter;
   })
 
 
   // const approvalHistory = recentApprovalsFilter !== 'All'? filterVar.flat(1) : data
-  const approvalHistory = recentApprovalsFilter !== 'All'? filterVar.flat(1) : data
+  const approvalHistory = recentApprovalsFilter !== 'All'? filterVar.flat(1) : sorted
   console.log('approvalHistory', approvalHistory)
   // console.log(`recentApprovalsFilter !== 'All'? filterVar.flat(1) : data}`, recentApprovalsFilter !== 'All'? filterVar.flat(1) : data})
 

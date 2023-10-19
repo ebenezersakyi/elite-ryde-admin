@@ -14,11 +14,13 @@ import { toast } from "react-toastify";
 export default function VendorSignUpApproval() {
   const [showDeclineDialogue, setShowDeclineDialogue] = useState(false)
   const {approvals} = useData()
+  const [token, setToken] = useState('')
 
   const searchParams = useSearchParams();
   const router = useRouter();
   
   useEffect(() => {
+    getToken()
     if (!searchParams.get("id")) {
       router.back();
     }
@@ -95,6 +97,21 @@ export default function VendorSignUpApproval() {
   const formattedDate = `${createdOnDate.getFullYear()}-${String(createdOnDate.getMonth() + 1).padStart(2, '0')}-${String(createdOnDate.getDate()).padStart(2, '0')}`;
   const formattedTime = `${String(createdOnDate.getHours()).padStart(2, '0')}:${String(createdOnDate.getMinutes()).padStart(2, '0')}:${String(createdOnDate.getSeconds()).padStart(2, '0')}`;
 
+  const getToken = async () => {
+    try {
+      const response = await fetch('https://elite-ryde-management-api.azurewebsites.net/api/generate-sas-token');
+      if (response.ok) {
+        const data = await response.json();
+        console.log('token', data.data.token);
+        setToken(data.data.token)
+      } else {
+        console.error('Failed to fetch token');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
   return (
     <div className="w-full">
     <div className="flex mt-[55px]">
@@ -169,13 +186,15 @@ export default function VendorSignUpApproval() {
             </span>
             <div className="ml-[5px] flex-col flex justify-center ">
               <p className="text-left text-[10px]">Document:</p>
-              <button
+              <a
+                href={`${contentObj.document}?${token}`}
+                download={true}
                 // onClick={handleDisableAccount}
                 className=" text-black py-[3px] px-[3px] rounded-full mr-4 hover:bg-gray-800 text-sm flex items-center "
               >
                 <Icon icon={"mdi:download"} width={15} className={"mr-1 text-black"} />
                 Download
-              </button>
+              </a>
             </div>
           </div>
           {/* <div>

@@ -31,7 +31,10 @@ for (let key in data) {
 
 const removeUndefined= arrayOfObjects.filter((item) => {
   return item !== undefined
+}).sort((a: any, b: any) => {
+  return new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime();
 })
+
 
 useEffect(() => {
   if(removeUndefined[0]?.content){

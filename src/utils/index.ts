@@ -27,6 +27,11 @@ export const menuItems: Iicon[] = [
     link: "/dashboard/approvals",
     title: "Approvals",
   },
+  {
+    icon: "material-symbols:mail",
+    link: "/dashboard/user-feedback",
+    title: "User Feedback",
+  },
 ];
 
 export interface InfoCardProps {

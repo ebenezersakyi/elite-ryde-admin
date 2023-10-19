@@ -77,7 +77,7 @@ export default function UserPage() {
       <div className="flex items-center">
         {user.passportPicture || user.idImage && token? 
           <img
-            src={`${user.passportPicture}?${token}` || `${user.idImage}?${token}`}
+            src={`${user.idImage}?${token}` || `${user.passportPicture}?${token}`}
             alt={`${user.firstName}'s Passport`}
             className="w-16 h-16 rounded-full mr-4 bg-slate-800"
           /> : 
