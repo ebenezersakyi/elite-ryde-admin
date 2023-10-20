@@ -209,7 +209,14 @@ export default function VendorSignUpApproval() {
         {data.status === "Pending" && (
           <div className="mt-[35px]">
             <button
-              onClick={() => manageApproval(data._id, true).then(() =>{sendEmail('ebensakyi0@gmail.com', `Your request has been approved`, 'Request Approved'); router.back()})}
+              onClick={() => manageApproval(data._id, true).then((bool) =>{
+                if(bool){
+                  toast.success('Approval Managed Successfully')
+                }else{
+                  toast.error('Error! \nPLease try again later')
+                }
+                router.back();
+              })}
               className="bg-green-500 text-white py-2 px-4 rounded-full hover:bg-green-600 mr-2"
             >
               Approve

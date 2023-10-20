@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useData } from "@/contexts/DataContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function SignUpApproval() {
   const {approvals} = useData()
@@ -176,7 +177,14 @@ export default function SignUpApproval() {
     {data.status === "Pending" && (
       <div className="mt-[35px]">
         <button
-          onClick={() => manageApproval(data._id, true).then(() =>{sendEmail(); router.back()})}
+          onClick={() => manageApproval(data._id, true).then((bool) =>{
+            if(bool){
+              toast.success('Approval Managed Successfully')
+            }else{
+              toast.error('Error! \nPLease try again later')
+            }
+            router.back();
+          })}
           className="bg-green-500 text-white py-2 px-4 rounded-full hover:bg-green-600 mr-2"
         >
           Approve
