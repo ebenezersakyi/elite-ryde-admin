@@ -190,13 +190,14 @@ export async function manageApproval(
       },
     });
     console.log(response)
-    if (response?.data?.status) {
-      // toast('Approval Managed Succesfully', { hideProgressBar: true, autoClose: 2000, type: 'success' })
-      toast('Approval Managed Succesfully!'); 
-    } else {
-      // toast(response?.data?.message, { hideProgressBar: true, autoClose: 2000, type: 'error' })
-      toast.error(response?.data?.message); 
-    }
+    return response?.data?.status
+    // if (response?.data?.status) {
+    //   // toast('Approval Managed Succesfully', { hideProgressBar: true, autoClose: 2000, type: 'success' })
+    //   toast('Approval Managed Succesfully!'); 
+    // } else {
+    //   // toast(response?.data?.message, { hideProgressBar: true, autoClose: 2000, type: 'error' })
+    //   toast.error(response?.data?.message); 
+    // }
   } catch (error: any) {
     toast(error?.message, { hideProgressBar: true, autoClose: 2000, type: 'error' })
   }
