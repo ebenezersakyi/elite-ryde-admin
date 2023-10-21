@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 
 export default function CarApproval() {
   const {approvals} = useData()
+  const [token, setToken] = useState('')
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function CarApproval() {
     if (!searchParams.get("id")) {
       router.back();
     }
+    getToken()
   }, []);
 
 
@@ -90,6 +92,21 @@ export default function CarApproval() {
     }
   }
 
+  const getToken = async () => {
+    try {
+      const response = await fetch('https://elite-ryde-management-api.azurewebsites.net/api/generate-sas-token');
+      if (response.ok) {
+        const data = await response.json();
+        console.log('token', data.data.token);
+        setToken(data.data.token)
+      } else {
+        console.error('Failed to fetch token');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
   const createdOnDate = new Date(data.createdOn);
   const formattedDate = `${createdOnDate.getFullYear()}-${String(createdOnDate.getMonth() + 1).padStart(2, '0')}-${String(createdOnDate.getDate()).padStart(2, '0')}`;
   const formattedTime = `${String(createdOnDate.getHours()).padStart(2, '0')}:${String(createdOnDate.getMinutes()).padStart(2, '0')}:${String(createdOnDate.getSeconds()).padStart(2, '0')}`;
@@ -125,7 +142,7 @@ export default function CarApproval() {
 
     <div className="flex">
       <span className="bg-[#99945d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
-        <Icon icon={`mdi:line`} width={25} className={'text-white'} />
+        <Icon icon={`mdi:road`} width={25} className={'text-white'} />
       </span>
       <div className="ml-[5px] flex-col flex justify-center ">
         <p className="text-left text-[10px]">Mileage:</p>
@@ -193,7 +210,8 @@ export default function CarApproval() {
     <h2 className="text-xl font-semibold mb-4 mt-[25px]">Driver Details</h2>
     <div className="grid grid-cols-2 gap-4">
       <div className="flex">
-        <span className="bg-[#99625d] text-white w-[45px] h-[45px] justify-center items-center flex rounded-full text-xl">{contentObj?.driver.name?.charAt(0).toUpperCase()}</span>
+        {/* <span className="bg-[#99625d] text-white w-[45px] h-[45px] justify-center items-center flex rounded-full text-xl">{contentObj?.driver.name?.charAt(0).toUpperCase()}</span> */}
+        <img src={`${contentObj?.driver?.image}?${token}`} alt="" className="w-[45px] h-[45px] rounded-full" />
         <div className="ml-[5px] flex-col justify-center items-center">
           <p className="flex">{contentObj.driver.name}</p>
           <p className="text-[10px] text-black">{contentObj.driver.email}</p>

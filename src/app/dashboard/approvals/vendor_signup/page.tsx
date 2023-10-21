@@ -133,7 +133,8 @@ export default function VendorSignUpApproval() {
         <h2 className="text-xl font-semibold mb-4">Vendor Signup Details</h2>
         <div className="grid grid-cols-2 gap-4">
           <div className="flex">
-            <span className="bg-[#99625d] text-white w-[45px] h-[45px] justify-center items-center flex rounded-full text-xl">{contentObj?.firstName?.charAt(0).toUpperCase()}</span>
+            {/* <span className="bg-[#99625d] text-white w-[45px] h-[45px] justify-center items-center flex rounded-full text-xl">{contentObj?.firstName?.charAt(0).toUpperCase()}</span> */}
+            <img src={`${contentObj.companyLogo}?${token}`} alt="" className="w-[45px] h-[45px] rounded-full" />
             <div className="ml-[5px] flex-col justify-center items-center">
                 <p className="flex">{contentObj.firstName || contentObj.basicInformation.make} {contentObj.lastName || contentObj.basicInformation.model}</p>
                 <p className="text-[10px] text-black">{contentObj.email || contentObj.basicInformation.year}</p>
