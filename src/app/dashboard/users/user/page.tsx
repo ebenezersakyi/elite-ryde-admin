@@ -3,7 +3,7 @@ import Spinner from "@/components/spinner/Spinner";
 import { useData } from "@/contexts/DataContext";
 import useFetchHistory from "@/hooks/useFetchHistory";
 import useFetchSingle from "@/hooks/useFetchSIngle";
-import { getTransactions } from "@/utils";
+import { baseURL, getTransactions } from "@/utils";
 import { Icon } from "@iconify/react";
 import axios from "axios";
 
@@ -25,8 +25,34 @@ export default function UserPage() {
   
   
   
-  const handleDisableAccount = () => {
-    alert("Account disabled!");
+  const handleSuspendAccount = async () => {
+    try {
+      const response = await axios.post(`${baseURL}/update-suspended`, {
+        id: user?._id, 
+        accountType: 'user', 
+        status: !user?.suspended
+      })
+      console.log('response', response.data)
+      toast.success(`Account ${user?.suspended? 'unsuspend': 'suspended'}`)
+      router.back()
+    } catch (error:any) {
+      toast.error(error)
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      const response = await axios.post(`${baseURL}/delete-account`, {
+        id: user?._id, 
+        accountType: 'user', 
+        authId: user?.authId
+      })
+      console.log('response', response.data)
+      toast.success(`Account Deleted`)
+      router.back()
+    } catch (error:any) {
+      toast.error(error)
+    }
   };
   
   
@@ -145,24 +171,25 @@ export default function UserPage() {
       )}
 
       <div className="flex mt-8">
-          {/* <button
-            onClick={handleDisableAccount}
-            className="bg-black text-white py-2 px-4 rounded-full mr-4 hover:bg-gray-800 text-sm flex items-center"
+          <button
+            onClick={handleSuspendAccount}
+            className="bg-orange-500 text-white py-2 px-4 rounded-full mr-4 hover:bg-gray-800 text-sm flex items-center"
           >
             <Icon icon={"mdi:account-off"} width={20} className={"mr-2"} />
-            Disable Account
-          </button> */}
+            {user?.suspended? "Unsuspend Account" : "Suspend Account"}
+          </button>
 
-          {/* <button
+          <button
             onClick={handleDeleteAccount}
-            className="bg-black text-white py-2 px-4 rounded-full mr-4 hover:bg-gray-800 text-sm flex items-center"
+            className="bg-red-500 text-white py-2 px-4 rounded-full mr-4 hover:bg-gray-800 text-sm flex items-center"
           >
             <Icon icon={"mdi:delete"} width={20} className={"mr-2"} />
             Delete Account
-          </button> */}
+          </button>
+
           <button
             onClick={() => handleViewTransactions(user.idNumber)}
-            className="bg-black text-white py-2 px-4 rounded-full hover:bg-gray-800 text-sm flex items-center"
+            className="bg-green-500 text-white py-2 px-4 rounded-full hover:bg-gray-800 text-sm flex items-center"
           >
             <Icon icon={"mdi:credit-card"} width={20} className={"mr-2"} />
             View History

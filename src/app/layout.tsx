@@ -2,6 +2,8 @@ import { UserProvider } from '@auth0/nextjs-auth0/client'
 import './globals.css'
 import type { Metadata } from 'next'
 import DataProvider from '@/contexts/DataContext'
+import { ToastContainer } from 'react-toastify'
+// import { ToastContainer } from 'react-toastify'
 
 
 export const metadata: Metadata = {
@@ -17,7 +19,21 @@ export default function RootLayout({
   return (
     <UserProvider>
       <html lang="en">
-        <body>{children}</body>
+        <body>
+          {children}
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+        </body>
       </html>
     </UserProvider>
   )

@@ -8,6 +8,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
 
 export default function UsersPage() {
   const router = useRouter();
@@ -49,6 +50,8 @@ export default function UsersPage() {
   
   return (
     <div className="flex flex-col w-full mt-[55px]">
+      {/* <ToastContainer/> */}
+
       <div className="flex cursor-pointer" onClick={() => router.back()}>
         <Icon
           icon={'mdi:arrow-left'} width={25} className={'text-black'} />

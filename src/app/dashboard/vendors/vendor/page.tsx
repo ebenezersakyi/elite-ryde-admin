@@ -5,7 +5,7 @@ import useFetchCars from "@/hooks/useFetchApprovals";
 import useFetchVendorCars from "@/hooks/useFetchCars";
 import useFetchSingle from "@/hooks/useFetchSIngle";
 import useFetchTransactions from "@/hooks/useFetchTransactions";
-import { getTransactions } from "@/utils";
+import { baseURL, getTransactions } from "@/utils";
 import { Icon } from "@iconify/react";
 import axios from "axios";
 
@@ -52,8 +52,34 @@ export default function UserPage() {
 
 
 
-  const handleDisableAccount = () => {
-    alert("Account disabled!");
+  const handleSuspendAccount = async () => {
+    try {
+      const response = await axios.post(`${baseURL}/update-suspended`, {
+        id: vendor?._id, 
+        accountType: 'vendor', 
+        status: !vendor?.suspended
+      })
+      console.log('response', response.data)
+      toast.success(`Account ${vendor?.suspended? 'unsuspend': 'suspended'}`)
+      router.back()
+    } catch (error:any) {
+      toast.error(error)
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      const response = await axios.post(`${baseURL}/delete-account`, {
+        id: vendor?._id, 
+        accountType: 'vendor', 
+        authId: vendor?.authId
+      })
+      console.log('response', response.data)
+      toast.success(`Account Deleted`)
+      router.back()
+    } catch (error:any) {
+      toast.error(error)
+    }
   };
 
 
@@ -192,25 +218,25 @@ export default function UserPage() {
       )}
 
       <div className="flex mt-8 border-b-[2px] pb-[15px]">
-          {/* <button
-            onClick={handleDisableAccount}
-            className="bg-black text-white py-2 px-4 rounded-full mr-4 hover:bg-gray-800 text-sm flex items-center"
+          <button
+            onClick={handleSuspendAccount}
+            className="bg-orange-500 text-white py-2 px-4 rounded-full mr-4 hover:bg-gray-800 text-sm flex items-center"
           >
             <Icon icon={"mdi:account-off"} width={20} className={"mr-2"} />
-            Disable Account
-          </button> */}
+            {vendor?.suspended? "Unsuspend Account" : "Suspend Account"}
+          </button>
 
-          {/* <button
+          <button
             onClick={handleDeleteAccount}
-            className="bg-black text-white py-2 px-4 rounded-full mr-4 hover:bg-gray-800 text-sm flex items-center"
+            className="bg-red-500 text-white py-2 px-4 rounded-full mr-4 hover:bg-gray-800 text-sm flex items-center"
           >
             <Icon icon={"mdi:delete"} width={20} className={"mr-2"} />
             Delete Account
-          </button> */}
+          </button>
 
           <button
             onClick={() => handleViewTransactions(vendor.idNumber)}
-            className="bg-black text-white py-2 px-4 rounded-full hover:bg-gray-800 text-sm flex items-center"
+            className="bg-green-500 text-white py-2 px-4 rounded-full hover:bg-gray-800 text-sm flex items-center"
           >
             <Icon icon={"mdi:credit-card"} width={20} className={"mr-2"} />
             View Transactions
@@ -275,77 +301,75 @@ export default function UserPage() {
         </div>
     </div>
 
+    {Object.keys(selectedCar).length !== 0&& (
+      <div className="fixed flex top-0 left-0 h-full w-full bg-black bg-opacity-80 justify-center items-center" onClick={() => setSelectedCar({})}>
+        {/* <span className="absolute top-10 right-10 bg-white text-black p-10">X</span> */}
+        <div className="max-w-[90vw] flex flex-col  p-4 md:w-[60vw]">
+          {/* Car Information */}
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden w-600">
+            <div className="flex overflow-x-auto">
+              {selectedCar.photos.map((photo: any, index:any) => (
+                <img
+                  key={index}
+                  src={photo}
+                  alt={`Car ${index + 1}`}
+                  className="w-[250px] h-[200px] object-cover m-2 rounded-md"
+                />
+              ))}
+            </div>
+            <div className="p-4">
+              <h2 className="text-2xl font-semibold">
+                {selectedCar.basicInformation.make} {selectedCar.basicInformation.model}
+              </h2>
+              <p className="text-gray-500">
+                <strong>Year:</strong> {selectedCar.basicInformation.year}
+              </p>
+              <p className="text-gray-500">
+                <strong>Mileage:</strong> {selectedCar.basicInformation.mileage} miles
+              </p>
+              <p className="text-gray-500">
+                <strong>Engine Type:</strong> {selectedCar.basicInformation.engineType}
+              </p>
+              <p className="text-gray-500">
+                <strong>Engine Size:</strong> {selectedCar.basicInformation.engineSize}L
+              </p>
+              <p className="text-gray-500">
+                <strong>Number of Seats:</strong> {selectedCar.basicInformation.numberOfSeats}
+              </p>
+              <p className="text-gray-500">
+                <strong>Transmission:</strong> {selectedCar.basicInformation.transmission}
+              </p>
+              <p className="text-gray-500">
+                <strong>Body Style:</strong> {selectedCar.basicInformation.bodyStyle}
+              </p>
+            </div>
+          </div>
 
-{Object.keys(selectedCar).length !== 0&& (
-  <div className="fixed flex top-0 left-0 h-full w-full bg-black bg-opacity-80 justify-center items-center" onClick={() => setSelectedCar({})}>
-    {/* <span className="absolute top-10 right-10 bg-white text-black p-10">X</span> */}
-    <div className="max-w-[90vw] flex flex-col  p-4 md:w-[60vw]">
-      {/* Car Information */}
-      <div className="bg-white shadow-lg rounded-lg overflow-hidden w-600">
-        <div className="flex overflow-x-auto">
-          {selectedCar.photos.map((photo: any, index:any) => (
-            <img
-              key={index}
-              src={photo}
-              alt={`Car ${index + 1}`}
-              className="w-[250px] h-[200px] object-cover m-2 rounded-md"
-            />
-          ))}
-        </div>
-        <div className="p-4">
-          <h2 className="text-2xl font-semibold">
-            {selectedCar.basicInformation.make} {selectedCar.basicInformation.model}
-          </h2>
-          <p className="text-gray-500">
-            <strong>Year:</strong> {selectedCar.basicInformation.year}
-          </p>
-          <p className="text-gray-500">
-            <strong>Mileage:</strong> {selectedCar.basicInformation.mileage} miles
-          </p>
-          <p className="text-gray-500">
-            <strong>Engine Type:</strong> {selectedCar.basicInformation.engineType}
-          </p>
-          <p className="text-gray-500">
-            <strong>Engine Size:</strong> {selectedCar.basicInformation.engineSize}L
-          </p>
-          <p className="text-gray-500">
-            <strong>Number of Seats:</strong> {selectedCar.basicInformation.numberOfSeats}
-          </p>
-          <p className="text-gray-500">
-            <strong>Transmission:</strong> {selectedCar.basicInformation.transmission}
-          </p>
-          <p className="text-gray-500">
-            <strong>Body Style:</strong> {selectedCar.basicInformation.bodyStyle}
-          </p>
-        </div>
-      </div>
-
-      {/* Driver Information */}
-      <div className="mt-8 bg-white shadow-lg rounded-lg overflow-hidden p-4">
-        <div className="flex items-center">
-          <img
-            src={selectedCar.driver.image}
-            alt="Driver"
-            className="w-16 h-16 object-cover rounded-full mr-4"
-          />
-          <div>
-            <h2 className="text-xl font-semibold">{selectedCar.driver.name}</h2>
-            <p className="text-gray-500">
-              <strong>ID Number:</strong> {selectedCar.driver.idNumber}
-            </p>
-            <p className="text-gray-500">
-              <strong>Email:</strong> {selectedCar.driver.email}
-            </p>
-            <p className="text-gray-500">
-              <strong>Phone Number:</strong> {selectedCar.driver.phoneNumber}
-            </p>
+          {/* Driver Information */}
+          <div className="mt-8 bg-white shadow-lg rounded-lg overflow-hidden p-4">
+            <div className="flex items-center">
+              <img
+                src={selectedCar.driver.image}
+                alt="Driver"
+                className="w-16 h-16 object-cover rounded-full mr-4"
+              />
+              <div>
+                <h2 className="text-xl font-semibold">{selectedCar.driver.name}</h2>
+                <p className="text-gray-500">
+                  <strong>ID Number:</strong> {selectedCar.driver.idNumber}
+                </p>
+                <p className="text-gray-500">
+                  <strong>Email:</strong> {selectedCar.driver.email}
+                </p>
+                <p className="text-gray-500">
+                  <strong>Phone Number:</strong> {selectedCar.driver.phoneNumber}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-)}
-
+    )}
 
     </div>
   );

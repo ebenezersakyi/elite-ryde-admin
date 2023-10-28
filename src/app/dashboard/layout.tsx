@@ -10,7 +10,7 @@ export default function DashboardLayout({
 }) {
   return (
       <DataProvider>
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -21,7 +21,7 @@ export default function DashboardLayout({
         draggable
         pauseOnHover
         theme="light"
-      />
+      /> */}
       <div className="w-[100vw]   divide-black/20 flex">
         <NavBar />
         <div className=" flex p-8 border-l-[1px] col-span-10 flex-grow ">{children}</div>

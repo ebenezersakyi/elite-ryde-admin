@@ -24,8 +24,8 @@ export default function DataProvider({ children }) {
     // console.log("admin", data);
   }
 
-  function updateVendors() {
-    // setVendors(data);
+  function updateVendors(data) {
+    setVendors(data);
   }
 
   function updateUsers(data) {

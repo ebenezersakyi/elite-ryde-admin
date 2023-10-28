@@ -14,6 +14,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import { useData } from "@/contexts/DataContext";
 import TableHeader from "@/components/shared/tables/components/TableHeader";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { ToastContainer } from "react-toastify";
 
 export default function DashBoard() {
   const [infoCardItems, setInfoCardItems] = useState()
@@ -90,6 +91,7 @@ export default function DashBoard() {
 
   return (
     <>
+          {/* <ToastContainer/> */}
       <div className="w-full">
         <div className=" absolute right-2 top-[25px] ">
           <div className="flexjustify-center items-center">

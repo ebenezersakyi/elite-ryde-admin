@@ -1,6 +1,7 @@
 import { baseURL } from "@/utils";
 import axios, { AxiosError } from "axios";
 import { useState, useEffect } from "react";
+
 export default function useFetchVendorCars(id: string) {
   const [carLoading, setLoading] = useState<boolean>(false);
   const [carData, setData] = useState<any>();
@@ -10,7 +11,7 @@ export default function useFetchVendorCars(id: string) {
         setLoading(true)
         const response = await axios({
             method: "get", 
-            url: `https://elite-ryde-management-api.azurewebsites.net/api/car?vendorId=${id}`
+            url: id.length>0? `https://elite-ryde-management-api.azurewebsites.net/api/car?vendorId=${id}` : `https://elite-ryde-management-api.azurewebsites.net/api/car`
             // url: `https://elite-ryde-management-api.azurewebsites.net/api/car`
         })
 

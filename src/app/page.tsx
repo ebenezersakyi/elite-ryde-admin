@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation"
 import { useUser } from "@auth0/nextjs-auth0/client"
 import { useEffect, useState } from "react";
 import Spinner from "@/components/spinner/Spinner";
+import { ToastContainer } from "react-toastify";
 
 export default function Home() {
   const [loggedIn, setLoggedIn] = useState(false)
