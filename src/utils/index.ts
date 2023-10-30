@@ -28,6 +28,11 @@ export const menuItems: Iicon[] = [
     title: "Approvals",
   },
   {
+    icon: "mdi:road",
+    link: "/dashboard/trips",
+    title: "Trips",
+  },
+  {
     icon: "material-symbols:mail",
     link: "/dashboard/user-feedback",
     title: "User Feedback",

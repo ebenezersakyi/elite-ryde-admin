@@ -119,9 +119,9 @@ const [message, setMessage] = useState('')
             >
                 X
             </span>
-            <div className="flex flex-col bg-white shadow-lg rounded-lg w-[600px] h-[90%] p-[20px] justify-center items-center">
-                <span className="text-[20px] text-black"><i>Message: </i>{message}</span>
-                <input type="text" className="flex w-[100%] mt-[20px] p-[10px] border-[1px] border-black rounded-lg" placeholder="Please type your message here..." />
+            <div className="flex flex-col bg-white shadow-lg rounded-lg w-[600px] h-[90%] p-[20px] justify-between ">
+                <span className="text-[20px] text-black text-left"><p className="text-gray-500 italic text-[10px]">Message: <br/></p>{message}</span>
+                <textarea className=" w-[100%] h-[100%] mt-[20px] p-[10px] border-[1px] border-black rounded-lg" placeholder="Please type your message here..." />
                 <button className="flex p-[10px] w-[100%] justify-center items-center bg-green-700 text-white mt-[15px] rounded-lg">
                     Send reply
                 </button>

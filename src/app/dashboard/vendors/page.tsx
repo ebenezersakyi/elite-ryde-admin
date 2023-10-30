@@ -6,8 +6,10 @@ import { useData } from "@/contexts/DataContext";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
 import TableHeader from "@/components/shared/tables/components/TableHeader";
+import { useState } from "react";
 
 const VendorsPage = () => {
+  const [searchText, setSearchText] = useState('')
   const router = useRouter();
   const {data, loading, error} = useFetchData("vendors")
   const  {updateVendors}  = useData();
@@ -25,11 +27,15 @@ const VendorsPage = () => {
 
   return (
     <div className="flex flex-col w-full mt-[55px]">
-      <div className="flex cursor-pointer" onClick={() => router.back()}>
-        <Icon
-          icon={'mdi:arrow-left'} width={25} className={'text-black'} />
-        <span className="ml-2">back</span>
-      </div> 
+      
+      <div className="flex items-center">
+        <div className="flex cursor-pointer" onClick={() => router.back()}>
+          <Icon
+            icon={'mdi:arrow-left'} width={25} className={'text-black'} />
+          <span className="ml-2">back</span>
+        </div> 
+        <input type="text" onChange={(e) => setSearchText(e.target.value)} placeholder="Search for a vendor" className="w-[100%] outline-none ml-[20px] border-[1px] border-gray-400 rounded-full p-[5px] px-[10px]" />
+      </div>
 
       <div className="mt-[25px] w-full overflow-x-scroll">
         <TableHeader titles={[
@@ -39,7 +45,13 @@ const VendorsPage = () => {
           "TIN",
         ]} />
 
-        {data?.map((item: any, index: any) => {
+        {data?.filter((item:any, index: any) => {
+          if(searchText.length == 0 || searchText == " "){
+            return item
+          }else{
+            return `${item.firstName} ${item.lastName}`.toLowerCase().includes(searchText.toLowerCase())
+          }
+        }).map((item: any, index: any) => {
           return (
             <div
               key={index}
