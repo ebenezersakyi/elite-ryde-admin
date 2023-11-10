@@ -54,7 +54,7 @@ export default function DashBoard() {
     datasets: [
       {
         label: 'Amount (GHS)',
-        data: [totalRentalPrice*0.7, totalRentalPrice*0.3],
+        data: [totalRentalPrice*0.9, totalRentalPrice*0.1],
         backgroundColor: [
           'rgba(255, 99, 132, 0.2)',
           'rgba(54, 162, 235, 0.2)',
@@ -279,6 +279,10 @@ export default function DashBoard() {
                 </span>
                 <div className="flex flex-col bg-white shadow-lg rounded-lg p-[20px] justify-between ">
                 <Doughnut data={chartData} />
+                <span className="text-[10px] text-gray-400">Amount:</span>
+                <span className="text-[17px] text-black">GHS {totalRentalPrice.toLocaleString()}</span>
+                {/* <span className="text-[10px] text-gray-400 mt-[10px]">Scope:</span>
+                <span className="text-[17px] text-black">{totalRentalPrice?.scope}</span> */}
                     {/* <span className="text-[20px] text-black text-left"><p className="text-gray-500 italic text-[10px]">Message: <br/></p>{message}</span>
                     <textarea className=" w-[100%] h-[100%] mt-[20px] p-[10px] border-[1px] border-black rounded-lg" placeholder="Please type your message here..." />
                     <button className="flex p-[10px] w-[100%] justify-center items-center bg-green-700 text-white mt-[15px] rounded-lg">

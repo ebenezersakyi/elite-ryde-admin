@@ -222,7 +222,7 @@ const DropDown = () => {
                   datasets: [
                     {
                       label: 'Amount (GHS)',
-                      data: [activeTrip?.rentalPrice*0.7, activeTrip?.rentalPrice*0.3],
+                      data: [activeTrip?.rentalPrice*0.9, activeTrip?.rentalPrice*0.1],
                       backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
