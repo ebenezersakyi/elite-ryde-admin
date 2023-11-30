@@ -85,6 +85,7 @@ export default function UserPage() {
 
 
   const handleViewTransactions = (id: string) => {
+    console.log('id', id)
     // toast('Loading...', { hideProgressBar: true, autoClose: 2000, type: 'success', position: 'top-right' })
     getTransactions(id).then((data) => {setVendorHistoryFunc(data);  router.push('/dashboard/vendors/history');})
   };
@@ -235,7 +236,7 @@ export default function UserPage() {
           </button>
 
           <button
-            onClick={() => handleViewTransactions(vendor.idNumber)}
+            onClick={() => handleViewTransactions(vendor.authId)}
             className="bg-green-500 text-white py-2 px-4 rounded-full hover:bg-gray-800 text-sm flex items-center"
           >
             <Icon icon={"mdi:credit-card"} width={20} className={"mr-2"} />

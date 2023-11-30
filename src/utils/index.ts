@@ -214,14 +214,23 @@ export async function manageApproval(
 export async function getTransactions(
   id: string,
 ) {
+  console.log('id', id)
   console.log('getting transacs')
   try {
+    // const response = await axios({
+    //   method: "get", 
+    //   url: `https://elite-ryde-management-api.azurewebsites.net/api/get-vendor-transactions?id=${id}`,
+    // });
+
     const response = await axios({
-      method: "get", 
       url: `https://elite-ryde-management-api.azurewebsites.net/api/get-vendor-transactions?id=${id}`,
+      method: "get",
     });
-    console.log('history',response.data.data)
-    return response.data.data
+    if (response?.data?.status) {
+      // setData(response?.data);
+      console.log('history',response?.data)
+      return response.data
+    }
     // if (response?.data?.status) {
       
     // } else {
