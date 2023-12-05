@@ -51,13 +51,32 @@ export default function HistoryPage() {
       return [color1, color2];
     }
 
-    // const AmountLayout = ({ children }) => {
-    //   return (
-    //     <section className="border-[#fff] border-[1px] rounded-lg text-center py-[3rem] backdrop-blur-sm">
-    //       {children}
-    //     </section>
-    //   );
-    // };
+    const RentalDetails = (dataProp:any) => {
+      const userShare = dataProp.rental.rentalPrice * 0.9;
+      const adminShare = dataProp.rental.rentalPrice * 0.1;
+      // const handlePayment = () => {
+        
+      //   // Implement the logic for processing the payment to user and admin here
+      //   console.log(`User Share: ${userShare}`);
+      //   console.log(`Admin Share: ${adminShare}`);
+      // };
+    
+      return (
+        <div style={{ background: 'white', padding: '20px', margin: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+          <h2>{dataProp.rental.carName}</h2>
+          <p>User: {dataProp.rental.userName}</p>
+          <p>Email: {dataProp.rental.userEmail}</p>
+          <p>Rental Price: ${dataProp.rental.rentalPrice.toLocaleString()}</p>
+          <p>Your Share: ${userShare.toLocaleString()}</p>
+          <p>Elite ryde: ${adminShare.toLocaleString()}</p>
+          <p>Status: {dataProp.rental.status}</p>
+          <p>Pickup Date: {dataProp.rental.pickupDate}</p>
+          <p>Return Date: {dataProp.rental.returnDate}</p>
+          {/* <button onClick={handlePayment}>Process Payment</button> */}
+        </div>
+      );
+    };
+    
 
   return (
     <div className="w-full h-full mt-[55px]">
@@ -82,7 +101,7 @@ export default function HistoryPage() {
             //   route={''}
             // />
             <>
-                  <div className="flex flex-col lg:grid grid-cols-3 w-full gap-4 ">
+                  <div className="flex flex-col  w-full gap-4 ">
         <div className="flex flex-col gap-4 col-span-2">
           <div className="flex flex-col sm:grid grid-cols-2 gap-4">
           <section className="border-[#000] border-[1px] rounded-lg text-center py-[3rem] backdrop-blur-sm">
@@ -90,11 +109,26 @@ export default function HistoryPage() {
               <p className="text-[2.5rem] font-[50px]">
                 GHS {data?.week_amount?.toLocaleString()}
               </p>
+              <p className="text-[15px] font-[20px] text-gray-500">
+                Your share: <b>GHS {(data?.week_amount * 0.9).toLocaleString()}</b>
+              </p>
+              <p className="text-[15px] font-[20px] text-gray-500">
+                Elite ryde: <b>GHS {(data?.week_amount * 0.1).toLocaleString()}</b>
+              </p>
+              {/* <p className="text-[2.5rem] font-[50px]">
+                GHS {data?.week_amount?.toLocaleString()}
+              </p> */}
             </section>
             <section className="border-[#000] border-[1px] rounded-lg text-center py-[3rem] backdrop-blur-sm">
               <p className="text-[1.3rem] font-[50px]">Total income earned</p>
               <p className="text-[2.5rem] font-[50px]">
                 GHS {data?.amount?.toLocaleString()}
+              </p>
+              <p className="text-[15px] font-[20px] text-gray-500">
+                Your share: <b>GHS {(data?.amount * 0.9).toLocaleString()}</b>
+              </p>
+              <p className="text-[15px] font-[20px] text-gray-500">
+                Elite ryde: <b>GHS {(data?.amount * 0.1).toLocaleString()}</b>
               </p>
             </section>
           </div>
@@ -105,7 +139,7 @@ export default function HistoryPage() {
           </div> */}
         </div>
 
-        <div className="grid place-items-center w-[50%]">
+        <div className="grid place-items-center w-[100%]">
           {!data ? (
             // <IconLoadingWhite />
             <span>Loading...</span>
@@ -133,6 +167,14 @@ export default function HistoryPage() {
               }}
             />
           )}
+        </div>
+
+        <div className="">
+          {data?.data.map((item:any, index:any) => {
+            return (
+              <RentalDetails key={item._id} rental={item} />
+            )
+            })}
         </div>
       </div>
       </>
