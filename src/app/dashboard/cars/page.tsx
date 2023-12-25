@@ -93,11 +93,16 @@ export default function CarsPage() {
   return (
     <div className="flex flex-col w-full mt-[55px]">
 
+<div className="flex justify-between">
       <div className="flex cursor-pointer" onClick={() => router.back()}>
         <Icon
           icon={'mdi:arrow-left'} width={25} className={'text-black'} />
         <span className="ml-2">back</span>
       </div> 
+      <div className="bg-slate-500 text-white p-[12px] rounded-lg cursor-pointer" onClick={() => {router.push('cars/carbrands')}}>
+        <span>Brand Details</span>
+      </div>
+</div>
 
       <div className="mt-[25px] grid grid-cols-1 justify-center items-center sm:grid-cols-2 md:grid-cols-3 bg-slate-100 rounded-lg p-4 ">
         {carData?.map((item: any, index: any) => (

@@ -179,6 +179,7 @@ export function returnDocumentTitle(name: string): string {
 }
 
 export const baseURL = "https://elite-ryde-admin-api.azurewebsites.net/api";
+export const mainURL = "https://elite-ryde-management-api.azurewebsites.net/api";
 
 export async function manageApproval(
   id: string,
