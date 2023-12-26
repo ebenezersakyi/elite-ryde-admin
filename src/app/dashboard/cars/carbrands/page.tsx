@@ -112,6 +112,8 @@ const addBrand = async () => {
             })
             console.log('Response:', response.data);
             getBrands()
+            setShowPopUp(false)
+            toast.success('Success')
         }
         
     } catch (error: any) {
@@ -131,6 +133,8 @@ const addModel
             })
             console.log('Response:', response.data);
             getBrands()
+            setShowAddModelPopUp(false)
+            toast.success('Success')
         }
         
     } catch (error: any) {
@@ -167,7 +171,7 @@ const addModel
                 return(
                     <div 
                         key={index}
-                        className="w-[30%] p-[10px] justify-center items-center flex rounded-lg bg-slate-300 cursor-pointer"
+                        className="w-[30%] m-[10px] p-[10px] justify-center items-center flex rounded-lg bg-slate-300 cursor-pointer"
                         onClick={() => {setShowAddModelPopUp(true); setActiveBrand(item)}}
                     >
                         {item.brand}
