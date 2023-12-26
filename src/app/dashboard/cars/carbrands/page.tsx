@@ -145,10 +145,10 @@ const addModel
 const deleteModel
  = async (modelName:any, _id:any) => {
     try {
-        if(modelName.length == 0){
-            toast.error('Please enter a car brand')
-            return;
-        }else{
+        // if(modelName.length == 0){
+        //     toast.error('Please enter a car brand')
+        //     return;
+        // }else{
             const response = await axios.post(`${mainURL}/deleteBrandOrModel`, {
                 model:modelName, 
                 _id: _id
@@ -157,7 +157,7 @@ const deleteModel
             getBrands()
             // setShowAddModelPopUp(false)
             toast.success('Success')
-        }
+        // }
         
     } catch (error: any) {
         toast.error(error)
@@ -167,10 +167,10 @@ const deleteModel
 const deleteBrand
  = async (_id:any) => {
     try {
-        if(modelName.length == 0){
-            toast.error('Please enter a car brand')
-            return;
-        }else{
+        // if(modelName.length == 0){
+        //     toast.error('Please enter a car brand')
+        //     return;
+        // }else{
             const response = await axios.post(`${mainURL}/deleteBrandOrModel`, {
                 _id: _id
             })
@@ -178,7 +178,7 @@ const deleteBrand
             getBrands()
             // setShowAddModelPopUp(false)
             toast.success('Success')
-        }
+        // }
         
     } catch (error: any) {
         toast.error(error)
@@ -216,8 +216,12 @@ const Brands = (prop:any) => {
             />
         </div>
 
-        {showModel && (
-            <div>
+        {/* {showModel && ( */}
+            <div
+            className={`overflow-hidden transition-all duration-3000 ease-out ${
+                showModel ? 'h-auto' : 'h-0'
+              }`}
+            >
                 {models?.map((item2:any, index:any) => {
                     return(
                         <div
@@ -247,7 +251,7 @@ const Brands = (prop:any) => {
 
             </div>
 
-        )}
+        {/* )} */}
     </div>
     )
 }
