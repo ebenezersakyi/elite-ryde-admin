@@ -142,6 +142,116 @@ const addModel
     }
 }
 
+const deleteModel
+ = async (modelName:any, _id:any) => {
+    try {
+        if(modelName.length == 0){
+            toast.error('Please enter a car brand')
+            return;
+        }else{
+            const response = await axios.post(`${mainURL}/deleteBrandOrModel`, {
+                model:modelName, 
+                _id: _id
+            })
+            console.log('Response:', response.data);
+            getBrands()
+            // setShowAddModelPopUp(false)
+            toast.success('Success')
+        }
+        
+    } catch (error: any) {
+        toast.error(error)
+    }
+}
+
+const deleteBrand
+ = async (_id:any) => {
+    try {
+        if(modelName.length == 0){
+            toast.error('Please enter a car brand')
+            return;
+        }else{
+            const response = await axios.post(`${mainURL}/deleteBrandOrModel`, {
+                _id: _id
+            })
+            console.log('Response:', response.data);
+            getBrands()
+            // setShowAddModelPopUp(false)
+            toast.success('Success')
+        }
+        
+    } catch (error: any) {
+        toast.error(error)
+    }
+}
+
+const Brands = (prop:any) => {
+    const [showModel, setShowModel] = useState(false);
+
+    const item = prop.item
+    const index = prop.index
+    const models = item.models
+    return(
+        <div 
+        className="w-[30%] m-[10px]"
+    >
+        <div 
+            key={index}
+            className="w-[100%] p-[10px] justify-between items-center flex rounded-lg bg-slate-300 "
+            // onClick={() => {setShowAddModelPopUp(true); setActiveBrand(item)}}
+        >
+            
+            <Icon
+                icon={'mdi:close'} width={20} className={'text-black ml-[5px] cursor-pointer'} 
+                onClick={() => {
+                    deleteBrand(item._id)
+                }}
+            />
+            {item.brand}
+            <Icon
+                icon={`mdi:chevron-${showModel?'up':'down'}`} width={20} className={'text-black ml-[5px] cursor-pointer'} 
+                onClick={() => {
+                    setShowModel(!showModel)
+                }}
+            />
+        </div>
+
+        {showModel && (
+            <div>
+                {models?.map((item2:any, index:any) => {
+                    return(
+                        <div
+                            key={index}
+                            className="p-[10px] my-[7px] text-center rounded-lg justify-between items-center flex bg-red-300"
+                        >
+                            <span className="flex-grow-1 text-center">{item2}</span>
+                            <Icon
+                                icon={'mdi:close'} width={20} className={'text-black ml-[5px] cursor-pointer'} 
+                                onClick={() => {
+                                    deleteModel(item2,item._id)
+                                }}
+                            />
+                        </div>
+                    )
+                })}
+                <div
+                    // key={index}
+                    className="cursor-pointer flex p-[10px] my-[7px] rounded-lg justify-center items-center bg-transparent border-dashed border-[1px] border-black"
+                    onClick={() => {setShowAddModelPopUp(true); setActiveBrand(item)}}
+                >
+                                                <Icon
+                    icon={'mdi:plus'} width={20} className={'text-black ml-[5px] cursor-pointer'} 
+                />
+                    New Model
+                </div>
+
+            </div>
+
+        )}
+    </div>
+    )
+}
+
   return (
     <div className="flex flex-col w-full mt-[55px]">
 
@@ -168,14 +278,50 @@ const addModel
 
         <div className="flex flex-wrap w-[100%] mt-[20px]">
             {brands?.map((item:any, index) => {
+                // const models = item.models
                 return(
-                    <div 
-                        key={index}
-                        className="w-[30%] m-[10px] p-[10px] justify-center items-center flex rounded-lg bg-slate-300 cursor-pointer"
-                        onClick={() => {setShowAddModelPopUp(true); setActiveBrand(item)}}
-                    >
-                        {item.brand}
-                    </div>
+                    // <div 
+                    //     className="w-[30%] m-[10px]"
+                    // >
+                    //     <div 
+                    //         key={index}
+                    //         className="w-[100%] p-[10px] justify-between items-center flex rounded-lg bg-slate-300 "
+                    //         onClick={() => {setShowAddModelPopUp(true); setActiveBrand(item)}}
+                    //     >
+                            
+                    //         <Icon
+                    //             icon={'mdi:close'} width={20} className={'text-black ml-[5px] cursor-pointer'} 
+                    //         />
+                    //         {item.brand}
+                    //         <Icon
+                    //             icon={'mdi:chevron-down'} width={20} className={'text-black ml-[5px] cursor-pointer'} 
+                    //         />
+                    //     </div>
+
+                    //     <div>
+                    //         {models?.map((item:any, index:any) => {
+                    //             return(
+                    //                 <div
+                    //                     key={index}
+                    //                     className="p-[10px] my-[7px] rounded-lg justify-center items-center flex bg-red-300"
+                    //                 >
+                    //                     {item}
+                    //                 </div>
+                    //             )
+                    //         })}
+                    //         <div
+                    //             // key={index}
+                    //             className="flex p-[10px] my-[7px] rounded-lg justify-center items-center bg-transparent border-dashed border-[1px] border-black"
+                    //         >
+                    //                                         <Icon
+                    //             icon={'mdi:plus'} width={20} className={'text-black ml-[5px] cursor-pointer'} 
+                    //         />
+                    //             New Model
+                    //         </div>
+
+                    //     </div>
+                    // </div>
+                    <Brands item={item} index={index}/>
                 )
             })}
 
@@ -229,11 +375,11 @@ const addModel
                     X
                 </span>
                 <div className="flex flex-col bg-white shadow-lg rounded-lg p-[20px] justify-between ">
-                    {activeBrand?.models?.map((item:any, index:any) =>{
+                    {/* {activeBrand?.models?.map((item:any, index:any) =>{
                         return(
                             <span key={index}>* {item}</span>
                         )
-                    })}
+                    })} */}
                     <input 
                         type="text" 
                         className="outline-none border-[1px] border-gray-300 p-[10px]" 
@@ -248,7 +394,7 @@ const addModel
                             addModel()
                         }}
                     >
-                        Submit
+                        Add
                     </div>
                 </div>
     
