@@ -202,7 +202,7 @@ const Brands = (prop:any) => {
         >
             
             <Icon
-                icon={'mdi:close'} width={20} className={'text-black ml-[5px] cursor-pointer'} 
+                icon={'mdi:close'} width={20} className={'text-white ml-[5px] cursor-pointer bg-black p-[5px] rounded-full'} 
                 onClick={() => {
                     deleteBrand(item._id)
                 }}
@@ -226,7 +226,7 @@ const Brands = (prop:any) => {
                         >
                             <span className="flex-grow-1 text-center">{item2}</span>
                             <Icon
-                                icon={'mdi:close'} width={20} className={'text-black ml-[5px] cursor-pointer'} 
+                                icon={'mdi:close'} width={20} className={'text-white ml-[5px] cursor-pointer bg-black p-[5px] rounded-full'} 
                                 onClick={() => {
                                     deleteModel(item2,item._id)
                                 }}
