@@ -207,42 +207,44 @@ export default function CarApproval() {
     </div>
     </div>
 
-    <h2 className="text-xl font-semibold mb-4 mt-[25px]">Driver Details</h2>
-    <div className="grid grid-cols-2 gap-4">
-      <div className="flex">
-        {/* <span className="bg-[#99625d] text-white w-[45px] h-[45px] justify-center items-center flex rounded-full text-xl">{contentObj?.driver.name?.charAt(0).toUpperCase()}</span> */}
-        <img src={`${contentObj?.driver?.image}?${token}`} alt="" className="w-[45px] h-[45px] rounded-full" />
-        <div className="ml-[5px] flex-col justify-center items-center">
-          <p className="flex">{contentObj.driver.name}</p>
-          <p className="text-[10px] text-black">{contentObj.driver.email}</p>
+    {contentObj.driver && (      
+      <>
+        <h2 className="text-xl font-semibold mb-4 mt-[25px]">Driver Details</h2>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="flex">
+            {/* <span className="bg-[#99625d] text-white w-[45px] h-[45px] justify-center items-center flex rounded-full text-xl">{contentObj?.driver.name?.charAt(0).toUpperCase()}</span> */}
+            <img src={`${contentObj?.driver?.image}?${token}`} alt="" className="w-[45px] h-[45px] rounded-full" />
+            <div className="ml-[5px] flex-col justify-center items-center">
+              <p className="flex">{contentObj.driver.name}</p>
+              <p className="text-[10px] text-black">{contentObj.driver.email}</p>
+            </div>
+          </div>
+
+          <div className="flex">
+            <span className="bg-[#99945d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
+              <Icon icon={`mdi:card`} width={25} className={'text-white'} />
+            </span>
+            <div className="ml-[5px] flex-col flex justify-center ">
+              <p className="text-left text-[10px]">ID Number:</p>
+              <p className="text-[14px]">{contentObj.driver.idNumber}</p>
+              {/* <p className="text-left text-[10px]">{formattedTime}</p> */}
+            </div>
+          </div>
+
+          <div className="flex">
+            <span className="bg-[#99945d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
+              <Icon icon={`mdi:phone`} width={25} className={'text-white'} />
+            </span>
+            <div className="ml-[5px] flex-col flex justify-center ">
+              <p className="text-left text-[10px]">Phone Number:</p>
+              <p className="text-[14px]">{contentObj.driver.phoneNumber}</p>
+              {/* <p className="text-left text-[10px]">{formattedTime}</p> */}
+            </div>
+          </div>
         </div>
-      </div>
+      </>
+    )}
 
-    <div className="flex">
-      <span className="bg-[#99945d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
-        <Icon icon={`mdi:card`} width={25} className={'text-white'} />
-      </span>
-      <div className="ml-[5px] flex-col flex justify-center ">
-        <p className="text-left text-[10px]">ID Number:</p>
-        <p className="text-[14px]">{contentObj.driver.idNumber}</p>
-        {/* <p className="text-left text-[10px]">{formattedTime}</p> */}
-      </div>
-    </div>
-
-    <div className="flex">
-      <span className="bg-[#99945d] w-[45px] h-[45px] justify-center items-center flex rounded-full">
-        <Icon icon={`mdi:phone`} width={25} className={'text-white'} />
-      </span>
-      <div className="ml-[5px] flex-col flex justify-center ">
-        <p className="text-left text-[10px]">Phone Number:</p>
-        <p className="text-[14px]">{contentObj.driver.phoneNumber}</p>
-        {/* <p className="text-left text-[10px]">{formattedTime}</p> */}
-      </div>
-    </div>
-
-
-
-    </div>
     {data.status === "Pending" && (
       <div className="mt-[35px]">
         <button

@@ -347,27 +347,29 @@ export default function UserPage() {
           </div>
 
           {/* Driver Information */}
-          <div className="mt-8 bg-white shadow-lg rounded-lg overflow-hidden p-4">
-            <div className="flex items-center">
-              <img
-                src={selectedCar.driver.image}
-                alt="Driver"
-                className="w-16 h-16 object-cover rounded-full mr-4"
-              />
-              <div>
-                <h2 className="text-xl font-semibold">{selectedCar.driver.name}</h2>
-                <p className="text-gray-500">
-                  <strong>ID Number:</strong> {selectedCar.driver.idNumber}
-                </p>
-                <p className="text-gray-500">
-                  <strong>Email:</strong> {selectedCar.driver.email}
-                </p>
-                <p className="text-gray-500">
-                  <strong>Phone Number:</strong> {selectedCar.driver.phoneNumber}
-                </p>
+          {selectedCar?.driver &&(
+            <div className="mt-8 bg-white shadow-lg rounded-lg overflow-hidden p-4">
+              <div className="flex items-center">
+                <img
+                  src={selectedCar.driver.image}
+                  alt="Driver"
+                  className="w-16 h-16 object-cover rounded-full mr-4"
+                />
+                <div>
+                  <h2 className="text-xl font-semibold">{selectedCar.driver.name}</h2>
+                  <p className="text-gray-500">
+                    <strong>ID Number:</strong> {selectedCar.driver.idNumber}
+                  </p>
+                  <p className="text-gray-500">
+                    <strong>Email:</strong> {selectedCar.driver.email}
+                  </p>
+                  <p className="text-gray-500">
+                    <strong>Phone Number:</strong> {selectedCar.driver.phoneNumber}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     )}

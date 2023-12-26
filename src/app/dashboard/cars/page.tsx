@@ -196,6 +196,7 @@ export default function CarsPage() {
           </div>
 
           {/* Driver Information */}
+          {selectedCar?.driver && (
           <div className="mt-8 bg-white shadow-lg rounded-lg overflow-hidden p-4">
             <div className="flex items-center">
               {/* <img
@@ -219,6 +220,7 @@ export default function CarsPage() {
               </div>
             </div>
           </div>
+          )}
         </div>
 
       </div>
